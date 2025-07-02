@@ -34,6 +34,7 @@ import (
 	"github.com/SigNoz/signoz/pkg/signoz"
 	"github.com/SigNoz/signoz/pkg/valuer"
 	"github.com/prometheus/prometheus/promql"
+	"sort"
 
 	"github.com/gorilla/mux"
 	"github.com/gorilla/websocket"
@@ -1100,6 +1101,9 @@ func (aH *APIHandler) listRules(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// todo(amol): need to add sorter
+	sort.Slice(rules, func(i, j int) bool {
+		return rules[i].Id < rules[j].Id
+	})
 
 	aH.Respond(w, rules)
 }
